@@ -18,4 +18,7 @@ function blackjack()
     $dealerCards->drewCards();
     $blackjack->info($playerCards);
     $blackjack->info($dealerCards);
+    $blackjack->addScore($playerCards);
+    $blackjack->infoScore();
+    $playerCards->addCard($playerCards);
 }
