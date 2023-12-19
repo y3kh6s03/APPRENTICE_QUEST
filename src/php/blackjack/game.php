@@ -1,34 +1,69 @@
 <?php
+
 namespace game;
 
-class Game {
+class Game
+{
 
-    public function start(){
-        echo "ブラックジャックを開始します。".PHP_EOL;
+    private int $score = 0;
+
+    public function start()
+    {
+        echo "ブラックジャックを開始します。" . PHP_EOL;
         return $this;
     }
 
-    public function info($userCards){
-        if($userCards->isPlayer){
-            foreach($userCards->cardsInHand as $key => $val)
-            echo "あなたの引いたカードは{$key}の{$val}です。".PHP_EOL;
-        }else{
-            $key = array_key_first($userCards->cardsInHand);
-            echo "ディーラーの引いたカードは{$key}の{$userCards->cardsInHand[$key]}です。".PHP_EOL;
-            echo "ディーラーの引いた2枚目のカードはわかりません。".PHP_EOL;
+    public function info($userCards)
+    {
+        if ($userCards->isPlayer) {
+            foreach ($userCards->cardsInHand as $key => $vals) {
+                if(!(empty($vals))){
+                    foreach($vals as $val){
+                        echo "あなたの引いたカードは{$key}の{$val}です。" . PHP_EOL;
+                    }
+                }
+            }
+        } else {
+            foreach($userCards->cardsInHand as $key => $vals){
+                if(!(empty($vals))){
+                    foreach($vals as $val){
+                        echo "ディーラーのの引いたカードは{$key}の{$val}です。" . PHP_EOL;
+                        echo "ディーラーの引いた2枚目のカードはわかりません。" . PHP_EOL;
+                        break 2;
+                    }
+                }
+            }
         }
     }
 
-    // public function score($userCards){
-    //     $count = !($count === 0) ? $count : 0;
-    //     foreach($user->cardsInHand as $key => $value){
-    //         if($value === 'A'){
+    public function infoScore()
+    {
+        echo "あなたの現在の得点は{$this->score}です。";
+    }
 
-    //         }
-    //     }
-    // }
+    public function addScore($userCards)
+    {
+        foreach ($userCards->cardsInHand as $key => $vals) {
+            if(!(empty($vals))){
+                foreach($vals as $val){
+                    $val = $this->changeScore($val);
+                    $this->score += $val;
+                }
+            }
+        }
+        return $this->score;
+    }
 
-
+    private function changeScore($val)
+    {
+        if ($val === 'A') {
+            return 1;
+        } elseif (!($val === 'A') && is_string($val)) {
+            return 10;
+        } else {
+            return $val;
+        }
+    }
 }
 
 
@@ -74,4 +109,3 @@ class Game {
 //         drewCards()
 //     }
 // }
-
