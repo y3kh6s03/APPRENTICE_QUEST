@@ -6,4 +6,5 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'oop\\robot\\' => array($baseDir . '/path/to/oop/robot'),
 );

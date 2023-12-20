@@ -2,48 +2,18 @@
 
 namespace card;
 
-require_once 'game.php';
-
-use game\Game;
-
 class Card
 {
-    public bool $isPlayer;
-    public array $cardsInHand = [
-        'ハート' => [],
-        'ダイヤ' => [],
-        'クラブ' => [],
-        'スペード' => []
-    ];
-    private array $CARDS_NUM = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 'J', 'Q', 'K'];
+    private array $CARD_NUMS = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 'J', 'Q', 'K'];
 
-    public function __construct($isPlayer = true)
+    public function drew($player)
     {
-        $this->isPlayer = $isPlayer;
-    }
+        $key = array_rand($player->cardsInHand);
+        $resultDrewCard = [];
+        $val = $this->CARD_NUMS[array_rand($this->CARD_NUMS)];
+        $resultDrewCard = array($key => $val);
+        $player->cardsInHand = array_merge_recursive($player->cardsInHand, $resultDrewCard);
 
-    public function drewCards($count = 2)
-    {
-        $keys = is_array(array_rand($this->cardsInHand, $count))
-            ? array_rand($this->cardsInHand, $count)
-            : array(array_rand($this->cardsInHand, $count));
-
-        foreach ($keys as $key) {
-            $val = $this->CARDS_NUM[array_rand($this->CARDS_NUM)];
-            $this->cardsInHand = array_merge_recursive($this->cardsInHand, array($key => $val));
-        }
-    }
-
-    public function addCard($userCards)
-    {
-        $game = new Game;
-        echo 'カードを引きますか？(Y/N):';
-        fscanf(STDIN, '%s', $input);
-        while ($input === 'Y') {
-            $this->drewCards(1);
-            $game->addScore($userCards);
-            $game->infoScore();
-            fscanf(STDIN, '%s', $input);
-        }
+        return $resultDrewCard;
     }
 }
