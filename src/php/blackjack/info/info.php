@@ -6,8 +6,6 @@ abstract class Info
 {
     abstract public function open($player);
 
-    abstract public function drewCard($player);
-
     public function addCard($card, $player)
     {
         foreach ($card as $key => $value) {

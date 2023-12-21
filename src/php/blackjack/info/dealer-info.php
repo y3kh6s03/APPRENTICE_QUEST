@@ -2,7 +2,7 @@
 
 namespace info;
 
-use card\Card;
+require_once "info.php";
 
 class DealerInfo extends Info
 {
@@ -30,19 +30,6 @@ class DealerInfo extends Info
     {
         foreach ($result as $key => $val) {
             echo "ディーラーの引いたカードは{$key}の{$val}です。" . PHP_EOL;
-        }
-    }
-
-    public function drewCard($player)
-    {
-        $card = new Card();
-        while ($player->score <= 17) {
-            $result = $card->drew($player);
-            $this->drewOpen($result);
-            $player->calcScore();
-            if ($player->score <= 17) {
-                $this->score($player);
-            }
         }
     }
 }
