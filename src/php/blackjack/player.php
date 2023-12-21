@@ -2,11 +2,6 @@
 
 namespace player;
 
-require_once 'info.php';
-require_once 'card.php';
-
-use info\Info;
-use card\Card;
 use Exception;
 
 class Player

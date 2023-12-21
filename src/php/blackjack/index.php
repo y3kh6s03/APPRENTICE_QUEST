@@ -1,5 +1,31 @@
 <?php
 
+use player\Player;
+
 require_once "blackjack.php";
 
-blackjack();
+echo "あなたとディーラー以外のプレイヤー数を0~3で入力してください" . PHP_EOL;
+fscanf(STDIN, "%d", $inputPlayer);
+
+$players = [];
+
+$user = new Player("あなた", true);
+$players[] = $user;
+$dealer = new Player("ディーラー", false);
+$players[] = $dealer;
+
+if ($inputPlayer === 0) {
+    echo "あなたとディーラーの直接対決です。" . PHP_EOL;
+} elseif ($inputPlayer > 0 && $inputPlayer <= 3) {
+    echo "あなた以外のプレイヤーが{$inputPlayer}人参加しました。" . PHP_EOL;
+    for ($i = 0; $i < $inputPlayer; $i++) {
+        $cpuName = "cpu" . $i;
+        $$cpuName = new Player($cpuName, false);
+        $players[] = $$cpuName;
+    }
+    echo "ブラックジャックを開始します。" . PHP_EOL;
+}else{
+    echo "無効な値が入力されました。0 ~ 3の値を入力してください。";
+}
+
+blackjack($players);

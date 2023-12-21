@@ -1,48 +1,37 @@
 <?php
 
-require_once "user-info.php";
-require_once "dealer-info.php";
+require_once "info/user-info.php";
+require_once "info/dealer-info.php";
 require_once "card.php";
 require_once "player.php";
 
 use card\Card;
 use info\UserInfo;
 use info\DealerInfo;
-use player\Player;
 
-
-function blackjack()
+function blackjack($players)
 {
     $userInfo = new UserInfo();
     $dealerInfo = new DealerInfo();
     $card = new Card();
-    $user = new Player('あなた', true);
-    $dealer = new Player('ディーラー', false);
-    $players = [$user, $dealer];
-
-    echo "ブラックジャックを開始します。" . PHP_EOL;
 
     try {
-        $card->drew($user);
-        $card->drew($user);
-        $user->calcScore($user);
-        $userInfo->open($user);
+        userFirstCard($players[0]);
+        dealerFirstCard($players[1]);
 
-        $card->drew($dealer);
-        $dealerInfo->open($dealer);
+        $userInfo->score($players[0]);
+        $card->addDrew($players[0]);
 
-        $userInfo->score($user)->drewCard($user);
+        dealerDrew($players[1]);
 
-        $result = $card->drew($dealer);
-        $dealerInfo->secondCard($result);
-        $dealer->calcScore($dealer);
-        $dealerInfo->score($dealer);
+        cpuDrew($players);
 
-        $dealerInfo->drewCard($dealer);
-        $dealer->calcScore($dealer);
-
-        $userInfo->result($user);
-        $dealerInfo->result($dealer);
+        for ($i = 0; $i < count($players); $i++) {
+            if ($players[$i]->name !== "ディーラー") {
+                $userInfo->result($players[$i]);
+            }
+        }
+        $dealerInfo->result($players[1]);
 
         $winPlayer = array_reduce($players, function ($maxScorePlayer, $player) {
             return ($player->score > $maxScorePlayer->score) ? $player : $maxScorePlayer;
@@ -52,5 +41,47 @@ function blackjack()
         echo $e;
     } finally {
         echo "ブラックジャックを終了します。";
+    }
+}
+
+function userFirstCard($user)
+{
+    $userInfo = new UserInfo();
+    $card = new Card();
+
+    $card->drew($user);
+    $card->drew($user);
+    $user->calcScore($user);
+    $userInfo->open($user);
+}
+
+function dealerFirstCard($dealer)
+{
+    $dealerInfo = new DealerInfo();
+    $card = new Card();
+
+    $card->drew($dealer);
+    $dealerInfo->open($dealer);
+}
+
+function dealerDrew($dealer)
+{
+    $dealerInfo = new DealerInfo();
+    $card = new Card();
+
+    $result = $card->drew($dealer);
+    $dealerInfo->secondCard($result);
+    $dealer->calcScore($dealer);
+    $dealerInfo->score($dealer);
+    $card->autoDrew($dealer);
+    $dealer->calcScore($dealer);
+}
+
+function cpuDrew($players)
+{
+    $card = new Card();
+
+    for ($i = 2; $i < count($players); $i++) {
+        $card->autoDrew($players[$i]);
     }
 }
