@@ -16,15 +16,22 @@ function blackjack($players)
     $card = new Card();
 
     try {
-        userFirstCard($players[0]);
-        dealerFirstCard($players[1]);
+        userFirstCard($players[0], $userInfo, $card);
+        dealerFirstCard($players[1], $dealerInfo, $card);
 
         $userInfo->score($players[0]);
-        $card->addDrew($players[0]);
+        $isDouble = $userInfo->doubleDown();
+        if ($isDouble) {
+            $card->doubleDrew($players[0]);
+            $players[0]->calcScore($players[0]);
+            $userInfo->score($players[0]);
+        } else {
+            $card->addDrew($players[0]);
+        }
 
-        dealerDrew($players[1]);
+        dealerDrew($players[1], $dealerInfo, $card);
 
-        cpuDrew($players);
+        cpuDrew($players, $card);
 
         for ($i = 0; $i < count($players); $i++) {
             if ($players[$i]->name !== "ディーラー") {
@@ -44,31 +51,22 @@ function blackjack($players)
     }
 }
 
-function userFirstCard($user)
+function userFirstCard($user, $userInfo, $card)
 {
-    $userInfo = new UserInfo();
-    $card = new Card();
-
     $card->drew($user);
     $card->drew($user);
     $user->calcScore($user);
     $userInfo->open($user);
 }
 
-function dealerFirstCard($dealer)
+function dealerFirstCard($dealer, $dealerInfo, $card)
 {
-    $dealerInfo = new DealerInfo();
-    $card = new Card();
-
     $card->drew($dealer);
     $dealerInfo->open($dealer);
 }
 
-function dealerDrew($dealer)
+function dealerDrew($dealer, $dealerInfo, $card)
 {
-    $dealerInfo = new DealerInfo();
-    $card = new Card();
-
     $result = $card->drew($dealer);
     $dealerInfo->secondCard($result);
     $dealer->calcScore($dealer);
@@ -77,10 +75,8 @@ function dealerDrew($dealer)
     $dealer->calcScore($dealer);
 }
 
-function cpuDrew($players)
+function cpuDrew($players, $card)
 {
-    $card = new Card();
-
     for ($i = 2; $i < count($players); $i++) {
         $card->autoDrew($players[$i]);
     }
