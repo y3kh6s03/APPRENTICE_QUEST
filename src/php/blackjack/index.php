@@ -8,7 +8,6 @@ echo "あなたとディーラー以外のプレイヤー数を0~3で入力し�
 fscanf(STDIN, "%d", $inputPlayer);
 
 $players = [];
-
 $user = new Player("あなた", true);
 $players[] = $user;
 $dealer = new Player("ディーラー", false);

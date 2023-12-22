@@ -36,7 +36,9 @@ class Player
         if ($this->score > 21) {
             throw new Exception("{$this->name}の合計値が21を超えたので、{$this->name}の負けです。" . PHP_EOL);
         }
-        return $this->score;
+        if ($this->name === "ディーラー") {
+            echo "{$this->name}の現在の得点は{$this->score}です。" . PHP_EOL;
+        }
     }
 
     private function changeScore($val)
