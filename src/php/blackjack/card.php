@@ -38,6 +38,10 @@ class Card
             }
         }
     }
+    public function doubleDrew($player)
+    {
+        $this->drew($player);
+    }
 
     public function autoDrew($player)
     {

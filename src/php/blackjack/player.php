@@ -34,7 +34,7 @@ class Player
             }
         }
         if ($this->score > 21) {
-            throw new Exception("合計値が21を超えたので、{$this->name}の負けです。" . PHP_EOL);
+            throw new Exception("{$this->name}の合計値が21を超えたので、{$this->name}の負けです。" . PHP_EOL);
         }
         return $this->score;
     }

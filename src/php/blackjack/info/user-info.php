@@ -18,4 +18,15 @@ class UserInfo extends Info
             }
         }
     }
+
+    public function doubleDown()
+    {
+        echo "ダブルダウンしますか？(y/n)" . PHP_EOL;
+        fscanf(STDIN, "%s", $isDouble);
+        if ($isDouble === "y") {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
