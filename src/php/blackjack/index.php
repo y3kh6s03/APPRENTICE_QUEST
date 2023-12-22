@@ -28,7 +28,7 @@ while($isInput){
         echo "ブラックジャックを開始します。" . PHP_EOL;
         $isInput = false;
     }else{
-        echo "無効な値が入力されました。0 ~ 3の値を入力してください。";
+        echo "無効な値が入力されました。0 ~ 3の値を入力してください。" . PHP_EOL;
         echo "あなたとディーラー以外のプレイヤー数を0~3で入力してください" . PHP_EOL;
         fscanf(STDIN, "%d", $inputPlayer);
     }
