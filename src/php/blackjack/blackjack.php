@@ -17,14 +17,17 @@ function blackjack($players)
         userFirstCard($players[0], $userCard);
         dealerFirstCard($players[1], $cpuCard);
 
-        $splitPlayer = split($players[0], $players);
-        $players[] = $splitPlayer;
-        print_r($players);
-        $userCard->drew($players[0]);
-        $userCard->drew($players[array_key_last($players)]);
-
-        $userCard->surrender($players[0]);
-        doubleDown($userCard, $players[0]);
+        if(isSplit($players[0])){
+            $splitPlayer = split($players[0], $players);
+            $players[] = $splitPlayer;
+            $userCard->drew($players[0]);
+            $userCard->drew($players[array_key_last($players)]);
+            $userCard->addDrew($players[0]);
+            $userCard->addDrew($players[array_key_last($players)]);
+        }else{
+            $userCard->surrender($players[0]);
+            doubleDown($userCard, $players[0]);
+        }
 
         dealerDrew($players[1], $cpuCard);
         cpuDrew($players, $cpuCard);
@@ -57,6 +60,16 @@ function doubleDown($userCard, $player)
     } else {
         $userCard->addDrew($player);
     }
+}
+
+function isSplit($player){
+    $isNum = [];
+    foreach($player->cardsInHand as $key => $val){
+        if(!empty($val)){
+            $isNum[] = $val;
+        }
+    }
+    return $isNum[0] === $isNum[1] ? true : false;
 }
 
 function split($player){
