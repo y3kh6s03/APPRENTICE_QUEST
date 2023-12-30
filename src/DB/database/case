@@ -1,0 +1,49 @@
+SELECT de.emp_no,
+  CASE de.to_date
+  WHEN '9999-01-01' THEN '在籍中'
+  ELSE '離職済み'
+   END AS '在籍状況'
+  FROM dept_emp de
+ WHERE de.emp_no BETWEEN '10100' AND '10200';
+
+
+SELECT em.emp_no, em.birth_date,
+  CASE
+    WHEN em.birth_date BETWEEN '1950-01-01' AND '1959-12-31' THEN '50年代'
+    WHEN em.birth_date BETWEEN '1960-01-01' AND '1969-12-31' THEN '60年代'
+    ELSE '不明'
+  END AS '年代'
+  FROM employees em
+ WHERE em.emp_no BETWEEN '10001' AND '10050';
+
+SELECT COUNT(em.emp_no),
+  CASE
+    WHEN em.birth_date BETWEEN '1950-01-01' AND '1959-12-31' THEN '50年代'
+    WHEN em.birth_date BETWEEN '1960-01-01' AND '1969-12-31' THEN '60年代'
+    ELSE '不明'
+  END AS '年代'
+  FROM employees em
+ GROUP BY '年代';
+ WHERE em.emp_no BETWEEN '10001' AND '10010';
+ INNER JOIN salaries sl
+    ON em.emp_no = sl.emp_no
+
+
+年代     最大給与
+50s      13098
+60s      234987
+
+SELECT
+   CASE WHEN em.birth_date BETWEEN '1950-01-01' AND '1959-12-31' THEN '50s'
+   WHEN em.birth_date BETWEEN '1960-01-01' AND '1969-12-31' THEN '60s'
+   ELSE NULL
+   END AS birth,
+   MAX(sl.salary) AS max_salary
+FROM employees em
+INNER JOIN salaries sl ON em.emp_no = sl.emp_no
+WHERE em.birth_date BETWEEN '1950-01-01' AND '1969-12-31'
+GROUP BY
+   CASE WHEN em.birth_date BETWEEN '1950-01-01' AND '1959-12-31' THEN '50s'
+        WHEN em.birth_date BETWEEN '1960-01-01' AND '1969-12-31' THEN '60s'
+        ELSE NULL
+   END;
