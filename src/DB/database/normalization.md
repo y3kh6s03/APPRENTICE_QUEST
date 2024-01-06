@@ -53,9 +53,9 @@ category
 | primary |      |
 
 history
-| id      | datetime | quentity | user_id     | product_id     |
-| ------- | -------- | -------- | ----------- | -------------- |
-| primary |          |          | fk(user id) | fk(product id) |
+| id      | datetime | quentity | product_id     |
+| ------- | -------- | -------- | -------------- |
+| primary |          |          | fk(product id) |
 
 user_history
 | user_id     | hisory_id      |
