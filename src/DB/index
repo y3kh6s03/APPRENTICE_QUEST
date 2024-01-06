@@ -1,4 +1,0 @@
-EXPLAIN ANALYZE
-SELECT *
-FROM employees
-WHERE birth_date = '1961-08-03';
