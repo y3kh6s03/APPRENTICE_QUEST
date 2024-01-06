@@ -13,56 +13,63 @@
 - 数量
 - 商品価格
 
+ECサイトテーブル
+| user_id | user_name | history_id | date | product_id | product_name | product_category | quentity | product_price |
+| ------- | --------- | ---------- | ---- | ---------- | ------------ | ---------------- | -------- | ------------- |
+| primary |           | primary    |      | primary    |              |                  |          |               |
+
+
+
 ## 第二正規形
+user
+| id      | name |
+| ------- | ---- |
+| primary |      |
 
-【ユーザーテーブル】
-- ID　(プライマリーキー)
-- 名前
+product
+| id      | name | price | category_name |
+| ------- | ---- | ----- | ------------- |
+| primary |      |       |               |
 
-【商品】
-- ID　(プライマリーキー)
-- 名前
-- カテゴリーID
-- 価格
-
-【購入履歴】
-- 購入履歴ID　(プライマリーキー)
-- 購入日
-- ユーザーID
-- 商品名
-- 商品カテゴリー
-- 数量
-- 商品価格
+history
+| id      | datetime | quentity | user_id     | product_id     |
+| ------- | -------- | -------- | ----------- | -------------- |
+| primary |          |          | fk(user id) | fk(product id) |
 
 ## 第三正規形
+user
+| id      | name |
+| ------- | ---- |
+| primary |      |
 
-【ユーザーテーブル】
-- ID　(プライマリーキー)
-- 名前
+product
+| id      | name | price | category_id     |
+| ------- | ---- | ----- | --------------- |
+| primary |      |       | fk(category id) |
 
-【商品】
-- ID　(プライマリーキー)
-- 名前
-- カテゴリーID
-- 価格
+category
+| id      | name |
+| ------- | ---- |
+| primary |      |
 
-【カテゴリー】
-- ID　(プライマリーキー)
-- カテゴリー名
+history
+| id      | datetime | quentity | user_id     | product_id     |
+| ------- | -------- | -------- | ----------- | -------------- |
+| primary |          |          | fk(user id) | fk(product id) |
 
-【購入履歴】
-- 購入履歴ID　(プライマリーキー)
-- 購入日
-- ユーザーID
-- 商品ID
-- 数量
+user_history
+| user_id     | hisory_id      |
+| ----------- | -------------- |
+| fk(user id) | fk(history id) |
 
 # ボイスコッド正規系
 【患者テーブル】
-- 患者　(プライマリーキー)
-- 診療科　(プライマリーキー)
+| kanja   | shinnryouka |
+| ------- | ----------- |
+| primary | primary     |
 
 【医師テーブル】
-- 診療科 (プライマリーキー)
-- 担当医師
+| shinnryouka | ishi |
+| ----------- | ---- |
+| primary     |      |
 

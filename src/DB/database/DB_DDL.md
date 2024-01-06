@@ -7,6 +7,7 @@
    2. チェックの実装はDBでは行わない。PHPで行う
       PHPとDBでチェックすると二重管理になり、無駄
       変更したときに、片方だけ変更するなどのミスにつながる
+
 ### 主キー primary key
 1. primary keyと設定する
 2. primary keyであれば、not null、uniqueが設定されている
@@ -16,6 +17,7 @@
    1. インデックス(uniqueやprimary key)をもつ必要がある.もしくは、index(auto_incrementをもたせるkey)このような記述で明示的にもたせる→show index from DB名.テーブル名とすれば確認できる
    2. ひとつのテーブルに対して、ひとつの属性に付与できる　primmary keyを設定するなど
    3. default設定は行えない
+
 ### テーブル内容の変更 alter table
 以下はすべてalter tableでテーブルを指定して以下を記述する
 1. alter tableでdbとtableを指定
