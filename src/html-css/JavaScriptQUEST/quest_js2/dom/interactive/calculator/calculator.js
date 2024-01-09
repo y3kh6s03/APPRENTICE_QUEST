@@ -56,5 +56,5 @@ clearButton.addEventListener("click", (e)=>{
     secondVal = "";
     operator = "";
     display.innerHTML = "";
-})
+});
 
