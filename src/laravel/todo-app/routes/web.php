@@ -21,8 +21,8 @@ Route::prefix('todos')
     Route::get('/', 'index')->name('index');
     Route::get('/create', 'create')->name('create');
     Route::POST('/create', 'store')->name('store');
+    Route::get('/{id}/edit', 'edit')->name('edit');
+    Route::post('/{id}', 'update')->name('update');
 });
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', [TodoController::class, 'index'])->name('index');

@@ -10,7 +10,6 @@ class TodoController extends Controller
     public function index()
     {
         $todos = Todo::all();
-        // dd($todos);
         return view('todos.index', compact('todos'));
     }
 
@@ -24,6 +23,20 @@ class TodoController extends Controller
         Todo::create([
             'title'=>$request->title
         ]);
+        return to_route('todos.index');
+    }
+
+    public function edit($id)
+    {
+        $todo=Todo::find($id);
+        return view('todos.edit', compact('todo'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $todo=Todo::find($id);
+        $todo->title=$request->title;
+        $todo->save();
         return to_route('todos.index');
     }
 }
