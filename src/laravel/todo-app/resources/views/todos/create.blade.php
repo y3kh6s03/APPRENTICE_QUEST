@@ -1,11 +1,11 @@
-@extends('layouts.header')
+<x-layout>
+  <div class="container">
+    <h1>タスクの追加</h1>
 
-@section('content')
-<div class="container">
-  <h1>タスクの追加</h1>
+    <x-todo-form routeName="todos.create" :id="null" value="" />
 
-  <x-todo-form routeName="todos.create" :id="null" value=""/>
-
-  @error('title')
+    @error('title')
     {{$message}}
-  @enderror
+    @enderror
+  </div>
+</x-layout>
