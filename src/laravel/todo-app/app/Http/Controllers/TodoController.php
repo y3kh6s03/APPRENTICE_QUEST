@@ -20,6 +20,9 @@ class TodoController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'title' => ['required', 'max:255'],
+        ]);
         Todo::create([
             'title' => $request->title
         ]);
