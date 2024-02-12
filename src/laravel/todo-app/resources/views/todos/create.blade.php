@@ -6,4 +6,6 @@
 
   <x-todo-form routeName="todos.create" :id="null" value=""/>
 
-@endsection
+  @error('title')
+    {{$message}}
+  @enderror
