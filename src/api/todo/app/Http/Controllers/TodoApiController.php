@@ -10,7 +10,7 @@ class TodoApiController extends Controller
     public function index()
     {
         $todos = Todo::select('id', 'title')->get();
-        return response()->json(['todo' => $todos]);
+        return response()->json(['todo' => $todos],200);
     }
 
     public function store(Request $req)
@@ -22,7 +22,7 @@ class TodoApiController extends Controller
         ]);
         $todos = Todo::select('id', 'title')->get();
 
-        return response()->json(['todo' => $todos]);
+        return response()->json(['todo' => $todos],201);
     }
 
     public function update(Request $req, $id)
