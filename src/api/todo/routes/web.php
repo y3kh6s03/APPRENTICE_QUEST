@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthApiController;
 use App\Http\Controllers\TodoApiController;
 use App\Http\Controllers\TodoController;
 use Illuminate\Support\Facades\Route;
@@ -30,4 +31,12 @@ Route::prefix('/api')
         Route::post('/', 'store')->name('store');
         Route::put('/{id}', 'update')->name('update');
         Route::delete('/{id}', 'delete')->name('delete');
+    });
+
+Route::prefix('/api/auth')
+    ->controller(AuthApiController::class)
+    ->name('auth.')
+    ->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::post('/', 'index')->name('login');
     });
