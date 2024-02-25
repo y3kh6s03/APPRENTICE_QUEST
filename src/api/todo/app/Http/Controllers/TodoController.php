@@ -9,9 +9,11 @@ class TodoController extends Controller
 {
     public function index()
     {
-        $todos = Todo::select('id', 'title')->get();
+        return view('auth.login');
+    }
 
-        return view('index');
+    public function register(){
+        return view('auth.register');
     }
 }
 
