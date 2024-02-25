@@ -9,7 +9,6 @@
     <ul id="todo-list"></ul>
 
     @push('js')
-    <!-- <script src="{{asset('/js/main.js')}}"></script> -->
-    <script src="{{asset('/js/challenge.js')}}"></script>
+    <script src="{{asset('/js/main.js')}}"></script>
     @endpush
 </x-layout>

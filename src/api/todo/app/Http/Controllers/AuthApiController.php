@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class AuthApiController extends Controller
 {
-    public function index(){
-        return view('auth.index');
+    public function register(Request $request){
+        dd($request);
     }
 }

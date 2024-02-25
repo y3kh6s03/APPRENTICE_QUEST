@@ -21,6 +21,7 @@ Route::prefix('/todo')
     ->name('todo.')
     ->group(function () {
         Route::get('/', 'index')->name('index');
+        Route::get('/register', 'register')->name('register');
     });
 
 Route::prefix('/api')
@@ -37,6 +38,6 @@ Route::prefix('/api/auth')
     ->controller(AuthApiController::class)
     ->name('auth.')
     ->group(function () {
-        Route::get('/', 'index')->name('index');
-        Route::post('/', 'index')->name('login');
+        Route::post('/login', 'login')->name('login');
+        Route::post('/register', 'register')->name('register');
     });

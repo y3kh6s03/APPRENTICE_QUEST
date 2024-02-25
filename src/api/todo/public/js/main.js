@@ -1,8 +1,39 @@
-const api = 'http://localhost:80/api'; // API の URL に置き換える
+const URL = 'http://localhost:80/api';
 
-function addTodo() {
-    const title = document.getElementById('new-todo').value;
-    fetch(`${api}/`, {
+async function fetchTodos() {
+    const res = await fetch(`${URL}/`)
+    if (res.ok) {
+        const json = await res.json()
+        return json;
+    } else {
+        throw new Error('No fetch res')
+    }
+}
+
+async function init() {
+    try {
+        const json = await fetchTodos();
+        const todoList = document.querySelector('#todo-list')
+        todoList.innerHTML = '';
+        for (const todo of json.todo) {
+            const listItem = document.createElement('li')
+            listItem.className = 'todo-item'
+            listItem.innerHTML = `
+                ${todo.title}
+                <button onclick="editTodo(${todo.id})">編集</button>
+                <button onclick="deleteTodo(${todo.id})">削除</button>
+            `
+            todoList.appendChild(listItem)
+        }
+    } catch (e) {
+        const listItem = document.createElement('li')
+        listItem.innerHTML = `${e}`
+    }
+}
+
+async function addTodo() {
+    const title = document.querySelector('#new-todo').value
+    const res = await fetch(`${URL}/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -10,54 +41,47 @@ function addTodo() {
         },
         body: JSON.stringify({ todo: { title } })
     })
-        .then(response => response.json())
-        .then(() => {
-            document.getElementById('new-todo').value = '';
-            fetchTodos();
-        });
+    if (res.ok) {
+        document.querySelector('#new-todo').value = ''
+        init();
+    } else {
+        alert('登録に失敗しました。')
+    }
 }
 
-function fetchTodos() {
-    fetch(`${api}/`)
-        .then(response => response.json())
-        .then(data => {
-            const todoList = document.getElementById('todo-list');
-            todoList.innerHTML = '';
-            for (let todo of data.todo) {
-                let listItem = document.createElement('li');
-                listItem.className = 'todo-item';
-                listItem.innerHTML = `
-        ${todo.title}
-        <button onclick="editTodo(${todo.id})">編集</button>
-        <button onclick="deleteTodo(${todo.id})">削除</button>
-      `;
-                todoList.appendChild(listItem);
-            }
-        });
-}
-
-function editTodo(id) {
-    const newTitle = prompt("新しいTODOを入力してください");
-    fetch(`${api}/${id}`, {
+async function editTodo(id) {
+    const editTitle = prompt('修正するタスク名を入力してください')
+    console.log(editTitle);
+    const res = await fetch(`${URL}/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
         },
-        body: JSON.stringify({ todo: { title: newTitle } })
+        body: JSON.stringify({ todo: { title: editTitle } })
     })
-        .then(response => response.json())
-        .then(() => fetchTodos());
+    if (res.ok) {
+        init();
+    } else {
+        alert('登録に失敗しました。')
+    }
 }
 
-function deleteTodo(id) {
-    fetch(`${api}/${id}`, {
+async function deleteTodo(id) {
+    const res = await fetch(`${URL}/${id}`,{
         method: 'DELETE',
-        headers:{
+        headers: {
+            'Content-Type': 'application/json',
             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
         }
     })
-        .then(() => fetchTodos());
+    if (res.ok) {
+        init();
+    } else {
+        alert('登録に失敗しました。')
+    }
 }
 
-fetchTodos();
+
+
+init();
