@@ -1,7 +1,7 @@
 const URL = 'http://localhost:80/api';
 
 async function fetchTodos() {
-    const res = await fetch(`${URL}/`)
+    const res = await fetch(`${URL}/todo`)
     if (res.ok) {
         const json = await res.json()
         return json;

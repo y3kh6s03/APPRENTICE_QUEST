@@ -2,7 +2,7 @@
     <h1 class="login">
         Login
     </h1>
-    <form method="POST" action="{{route('auth.login')}}">
+    <form id="login-form" name="login" method="POST">
         <label for="email">
             Email
         </label>
@@ -10,12 +10,15 @@
         <label for="password">
             Password
         </label>
-        <input id="email" type="email" placeholder="パスワードを入力してください">
-        <button class="register_btn">
+        <input id="password" type="password" placeholder="パスワードを入力してください">
+        <button class="login-btn" onclick=postLogin()>
             ログイン
         </button>
     </form>
-    <a href="{{route('todo.register')}}" class="">
+    <a href="{{route('index.register')}}" class="">
         アカウント作成
     </a>
+    @push('js')
+    <script src="{{asset('/js/login.js')}}"></script>
+    @endpush
 </x-layout>
