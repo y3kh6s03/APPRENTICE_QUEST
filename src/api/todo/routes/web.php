@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AuthApiController;
+use App\Http\Controllers\JWTAuthController;
 use App\Http\Controllers\TodoApiController;
 use App\Http\Controllers\TodoController;
+use GuzzleHttp\Middleware;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,17 +18,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('/todo')
+Route::prefix('/')
     ->controller(TodoController::class)
-    ->name('todo.')
+    ->name('index.')
     ->group(function () {
-        Route::get('/', 'index')->name('index');
+        Route::get('/todo', 'index')->name('index');
+        Route::get('/', 'login')->name('login');
         Route::get('/register', 'register')->name('register');
     });
 
-Route::prefix('/api')
+Route::prefix('/api/todo')
     ->controller(TodoApiController::class)
-    ->name('api.')
+    ->name('todo.')
     ->group(function () {
         Route::get('/', 'index')->name('index');
         Route::post('/', 'store')->name('store');
@@ -34,10 +37,18 @@ Route::prefix('/api')
         Route::delete('/{id}', 'delete')->name('delete');
     });
 
-Route::prefix('/api/auth')
-    ->controller(AuthApiController::class)
+Route::prefix('/api/todo/auth')
+    ->controller(JWTAuthController::class)
     ->name('auth.')
     ->group(function () {
-        Route::post('/login', 'login')->name('login');
         Route::post('/register', 'register')->name('register');
+        Route::post('/login', 'login')->name('login');
+
+        Route::middleware('api')->group(function(){
+            Route::post('/logout', 'logout')->name('logout');
+            Route::post('/refresh', 'refresh')->name('refresh');
+            Route::post('/me', 'me')->name('me');
+        });
     });
+
+
