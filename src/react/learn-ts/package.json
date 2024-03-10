@@ -1,11 +1,11 @@
 {
   "name": "learn-ts",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "lite-server"
+    "start": "lite-server",
+    "build": "webpack"
   },
   "author": "",
   "license": "ISC",
@@ -18,5 +18,6 @@
   },
   "dependencies": {
     "lite-server": "^2.6.1"
-  }
+  },
+  "description": ""
 }

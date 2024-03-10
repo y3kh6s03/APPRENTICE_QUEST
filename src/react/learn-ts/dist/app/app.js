@@ -1,12 +1,6 @@
 "use strict";
-class Person {
-    constructor(name, age) {
-        this.name = name;
-        this.age = age;
-    }
+function extractAndConvert(obj, key) {
+    return 'value: ' + obj[key];
 }
-const persons = [];
-for (let i = 0; i < 5; i++) {
-    persons[i] = new Person(`yosu ${i}`, i);
-}
-console.log(persons);
+const result = extractAndConvert({ name: 'yosuke' }, 'name');
+console.log(result);

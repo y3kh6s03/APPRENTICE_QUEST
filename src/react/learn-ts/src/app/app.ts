@@ -1,14 +1,5 @@
-class Person {
-  name: string;
-  age: number;
-  constructor(name: string, age: number) {
-    this.name = name
-    this.age = age
-  }
+function extractAndConvert<T extends object, U extends keyof T>(obj: T,key: U){
+  return 'value: ' + obj[key]
 }
-const persons: object[] = []
-for (let i: number = 0; i < 5; i++) {
-  persons[i]=new Person(`yosu ${i}`, i);
-}
-
-console.log(persons);
+const result = extractAndConvert({name: 'yosuke'},'name');
+console.log(result)
