@@ -1,4 +1,3 @@
-import { Todo } from "./Example"
 type TodoProps = {
   todos: {title: string,id: number}[]
 }

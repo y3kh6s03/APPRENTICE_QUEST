@@ -1,7 +1,7 @@
 import { useState } from "react"
-import TodoList from "../Example/TodoList"
+import TodoList from "../Todo/TodoList"
 
-export type Todo = {
+type Todo = {
   id: number,
   title: string,
 }

@@ -1,6 +1,5 @@
 import Cat from './Card/Cat';
 import Card from './Card/Card';
-import './App.css';
 
 function App() {
 
