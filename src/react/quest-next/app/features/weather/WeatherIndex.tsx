@@ -1,9 +1,9 @@
-import WeatherMain from "./WeatherMain";
+import WeatherInfo from "./WeatherInfo";
 
-export default function WeatherIndex(){
+export default function WeatherIndex() {
   return (
     <>
-    <WeatherMain/>
+      <WeatherInfo />
     </>
   )
 }
